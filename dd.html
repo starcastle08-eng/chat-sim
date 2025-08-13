@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>실시간 채팅 시뮬레이션</title>
+<style>
+/* 전체 레이아웃 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 채팅 컨테이너 */
+.chat-container {
+    background: #ffffff;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 상단 로고 */
+.chat-header {
+    background: #1d2f85;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.chat-header img {
+    height: 30px;
+}
+
+/* 채팅창 */
+#chat-box {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #eef1f7;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+#chat-box p {
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* 입력창 영역 */
+.input-area {
+    display: flex;
+    padding: 10px;
+    gap: 5px;
+}
+.input-area input {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+.input-area button {
+    padding: 8px 15px;
+    background: #1d2f85;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.input-area button:hover {
+    background: #152165;
+}
+</style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="chat-header">
+        <img src="https://s3.orbi.kr/images/logo.png" alt="로고">
+        <h2>채팅 시뮬레이션</h2>
+    </div>
+    <div id="chat-box"></div>
+    <div class="input-area">
+        <input type="text" id="nickname" placeholder="닉네임 입력">
+        <input type="text" id="message" placeholder="메시지 입력">
+        <button onclick="sendMessage()">전송</button>
+    </div>
+</div>
+
+<script>
+function sendMessage() {
+    const nick = document.getElementById('nickname').value.trim() || '익명';
+    const msg = document.getElementById('message').value.trim();
+    if (!msg) return;
+    
+    const chatBox = document.getElementById('chat-box');
+    const p = document.createElement('p');
+    p.textContent = nick + ': ' + msg;
+    chatBox.appendChild(p);
+    
+    document.getElementById('message').value = '';
+    chatBox.scrollTop = chatBox.scrollHeight; // 자동 스크롤
+}
+
+// Enter 키로 메시지 전송
+document.getElementById('message').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') sendMessage();
+});
+</script>
+</body>
+</html>
